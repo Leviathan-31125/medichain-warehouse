@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StockController extends Controller
 {
@@ -29,8 +30,35 @@ class StockController extends Controller
     }
 
     public function createStock (Request $request) {
-        $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
+        $validator = Validator::make($request->all(), [
+            'fc_stockcode' => 'required',
+            'fv_namestock' => 'required',
+            'fv_namealias_stock' => 'required',
+            'fc_brandcode' => 'required',
+            'fv_group' => 'required',
+            'fc_typestock' => 'required',
+            'fc_formstock' => 'required',
+            'fc_namepack' => 'required',
+            'fn_minstock' => 'required',
+            'fn_maxstock' => 'required',
+            'fm_purchase' => 'required',
+            'fm_sales' => 'requried'
+        ], [
+            'fc_stockcode.required' => 'Katalog stock wajib diisi',
+            'fv_namestock.requried' => 'Nama stock wajib diisi',
+            'fv_namealias_stock.requried' => 'Setidaknya masukkan nama alias / sebutan',
+            'fc_brandcode.requried' => 'Brand wajib diisi',
+            'fv_group.requried' => 'Group brand wajib diisi',
+            'fc_typestock.requried' => 'Tipe stok wajib diisi',
+            'fc_formstock.requried' => 'Wujud stok wajib diisi',
+            'fc_namepack.requried' => 'Kemasan stok wajib diisi',
+            'fn_minstock.requried' => 'Jumlah minimal stok wajib diisi',
+            'fn_maxstock.requried' => 'Jumlah maksimal stok wajib diisi',
+            'fm_purchase.requried' => 'Harga pembelian stok wajib diisi',
+            'fm_sales.requried' => 'Harga jual pasar stok wajib diisi'
+        ]);
         
+        $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
         
         // pengecekan stockcode untuk mencegah duplikasi stock 
         if ($stock) 
@@ -50,6 +78,7 @@ class StockController extends Controller
             'fn_minstock' => $request->fn_minstock,
             'fn_maxstock' => $request->fn_maxstock,
             'fm_purchase' => $request->fm_purchase,
+            'fm_sales' => $request->fm_sales,
             'ft_description' => $request->ft_description
         ]);
 
