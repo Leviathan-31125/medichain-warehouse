@@ -57,6 +57,13 @@ class StockController extends Controller
             'fm_purchase.required' => 'Harga pembelian stok wajib diisi',
             'fm_sales.required' => 'Harga jual pasar stok wajib diisi'
         ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ]);
+        }
         
         $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
         
