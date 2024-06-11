@@ -42,20 +42,20 @@ class StockController extends Controller
             'fn_minstock' => 'required',
             'fn_maxstock' => 'required',
             'fm_purchase' => 'required',
-            'fm_sales' => 'requried'
+            'fm_sales' => 'required'
         ], [
             'fc_stockcode.required' => 'Katalog stock wajib diisi',
-            'fv_namestock.requried' => 'Nama stock wajib diisi',
-            'fv_namealias_stock.requried' => 'Setidaknya masukkan nama alias / sebutan',
-            'fc_brandcode.requried' => 'Brand wajib diisi',
-            'fv_group.requried' => 'Group brand wajib diisi',
-            'fc_typestock.requried' => 'Tipe stok wajib diisi',
-            'fc_formstock.requried' => 'Wujud stok wajib diisi',
-            'fc_namepack.requried' => 'Kemasan stok wajib diisi',
-            'fn_minstock.requried' => 'Jumlah minimal stok wajib diisi',
-            'fn_maxstock.requried' => 'Jumlah maksimal stok wajib diisi',
-            'fm_purchase.requried' => 'Harga pembelian stok wajib diisi',
-            'fm_sales.requried' => 'Harga jual pasar stok wajib diisi'
+            'fv_namestock.required' => 'Nama stock wajib diisi',
+            'fv_namealias_stock.required' => 'Setidaknya masukkan nama alias / sebutan',
+            'fc_brandcode.required' => 'Brand wajib diisi',
+            'fv_group.required' => 'Group brand wajib diisi',
+            'fc_typestock.required' => 'Tipe stok wajib diisi',
+            'fc_formstock.required' => 'Wujud stok wajib diisi',
+            'fc_namepack.required' => 'Kemasan stok wajib diisi',
+            'fn_minstock.required' => 'Jumlah minimal stok wajib diisi',
+            'fn_maxstock.required' => 'Jumlah maksimal stok wajib diisi',
+            'fm_purchase.required' => 'Harga pembelian stok wajib diisi',
+            'fm_sales.required' => 'Harga jual pasar stok wajib diisi'
         ]);
         
         $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
