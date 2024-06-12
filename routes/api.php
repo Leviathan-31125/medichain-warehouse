@@ -45,9 +45,10 @@ Route::prefix('brand')->group(function () {
 
 Route::prefix('delivery-order')->group(function() {
     Route::prefix('temp-do-mst')->controller(TempDOMSTController::class)
-    ->middleware('auth:api')->group(function () {
+    ->group(function () {
         Route::get('/', 'getAllTempDOMST');
         Route::get('/{fc_dono}', 'detailTempDOMST');
+        Route::get('/so/{fc_dono}', 'getDetailTempDOSOMST');
         Route::post('/', 'createTempDOMST');
         Route::put('/{fc_dono}', 'setDetailInfoTempDODTL');
         Route::put('/{fc_dono}/submit', 'submitTempDOMST');

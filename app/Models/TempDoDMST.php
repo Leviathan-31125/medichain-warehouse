@@ -26,4 +26,8 @@ class TempDoDMST extends Model
     public function warehouse () {
         return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode');
     }
+
+    public function somst() {
+        return $this->hasOne(SOMST::class, 'fc_sono', 'fc_sono');
+    }
 }

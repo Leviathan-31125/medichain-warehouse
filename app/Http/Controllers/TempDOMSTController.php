@@ -23,6 +23,15 @@ class TempDOMSTController extends Controller
         ]);
     }
 
+    public function getDetailTempDOSOMST($fc_dono){
+        $dono_decoded = base64_decode($fc_dono);
+        $TempDoMST = TempDoDMST::with(['tempdodtl', 'somst', 'somst.sodtl', 'somst.sodtl.stock'])->find($dono_decoded);
+
+        if ($TempDoMST)
+            return response()->json(['status' => 200, 'data' => $TempDoMST]);
+        return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System']);
+    }
+
     public function detailTempDOMST ($fc_dono) {
         $dono_decoded = base64_decode($fc_dono);
         $TempDoMST = TempDoDMST::with('tempdodtl')->find($dono_decoded);

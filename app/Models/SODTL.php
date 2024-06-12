@@ -22,4 +22,8 @@ class SODTL extends Model
     public function somst () {
         return $this->hasOne(SOMST::class, 'fc_sono', 'fc_sono');
     }
+
+    public function stock() {
+        return $this->hasOne(Stock::class, 'fc_barcode', 'fc_barcode');
+    }
 }
