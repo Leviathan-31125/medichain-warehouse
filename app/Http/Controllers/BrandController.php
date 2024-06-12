@@ -48,13 +48,13 @@ class BrandController extends Controller
         $brand = Brand::find($brandcode_decoded);
 
         if (!$brand) 
-            return response()->json(['status' => '400', 'message' => 'Gagal update! Brand tidak ditemukan'], 400);
+            return response()->json(['status' => 400, 'message' => 'Gagal update! Brand tidak ditemukan'], 400);
 
         $updated = $brand->update($request->all());
         if ($updated) 
             return response()->json(['status' => 201, 'message' => 'Data berhasil diupdate']);
         else
-            return response()->json(['status' => '400', 'message' => 'Gagal update!'], 400);
+            return response()->json(['status' => 400, 'message' => 'Gagal update!'], 400);
     }
 
     public function getDetailBrand ($fc_brandcode) {
@@ -63,9 +63,9 @@ class BrandController extends Controller
         $brand = Brand::find($brandcode_decoded);
         
         if($brand) 
-            return response()->json(['status' => '200', 'data' => $brand]);
+            return response()->json(['status' => 200, 'data' => $brand]);
         else 
-            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan'], 400);
+            return response()->json(['status' => 400, 'message' => 'Not Found! Data tidak ditemukan'], 400);
     }
 
     public function deleteBrand ($fc_brandcode) {
@@ -74,8 +74,8 @@ class BrandController extends Controller
         $brand = Brand::where('fc_brandcode', $brandcode_decoded)->delete();
 
         if($brand) 
-            return response()->json(['status' => '200', 'message' => 'Brand berhasil dihapus']);
+            return response()->json(['status' => 200, 'message' => 'Brand berhasil dihapus']);
         else 
-            return response()->json(['status' => '400', 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
+            return response()->json(['status' => 400, 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
     }
 }

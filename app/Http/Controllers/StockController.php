@@ -24,9 +24,9 @@ class StockController extends Controller
         $stock = Stock::with('brand')->find($barcode_decoded);
         
         if($stock) 
-            return response()->json(['status' => '200', 'data' => $stock]);
+            return response()->json(['status' => 200, 'data' => $stock]);
         else 
-            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan'], 400);
+            return response()->json(['status' => 400, 'message' => 'Not Found! Data tidak ditemukan'], 400);
     }
 
     public function createStock (Request $request) {
@@ -90,9 +90,9 @@ class StockController extends Controller
         ]);
 
         if ($created) 
-            return response()->json(['status' => '201', 'message' => 'Stock baru berhasil dibuat', 'data' => $created]);
+            return response()->json(['status' => 201, 'message' => 'Stock baru berhasil dibuat', 'data' => $created]);
         else 
-            return response()->json(['status' => '400', 'message' => 'Create Failed! Gagal menambahkan stock'], 400);
+            return response()->json(['status' => 400, 'message' => 'Create Failed! Gagal menambahkan stock'], 400);
     }
 
     public function updateStock (Request $request, $fc_barcode) {
@@ -114,18 +114,18 @@ class StockController extends Controller
         
         // pengecekan stok apakah ada di system atau tidak 
         if (!$stock)
-            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan'], 400);
+            return response()->json(['status' => 400, 'message' => 'Not Found! Data tidak ditemukan'], 400);
 
         // pengecekan brand sudah ter-register atau tidak
         if(!$this->brand_check($request->fc_brandcode)) 
-            return response()->json(['status' => '400', 'message' => 'Brand undefined! Brand belum terdaftar pada system'], 400);
+            return response()->json(['status' => 400, 'message' => 'Brand undefined! Brand belum terdaftar pada system'], 400);
 
         // update data berdasarkan request kecuali stockcode
         $updated = $stock->update($request->except(['fc_stockcode']));
         if ($updated)
             return response()->json(['status' => 201, 'message' => 'Data stock berhasil diupdate']);
         else
-            return response()->json(['status' => '400', 'message' => 'Gagal update!'], 400);
+            return response()->json(['status' => 400, 'message' => 'Gagal update!'], 400);
     }
 
     public function deleteStock ($fc_barcode) {
@@ -133,9 +133,9 @@ class StockController extends Controller
         $brand = Stock::where('fc_barcode',$brandcode_decoded)->delete();
 
         if($brand) 
-            return response()->json(['status' => '200', 'message' => 'Stock berhasil dihapus']);
+            return response()->json(['status' => 200, 'message' => 'Stock berhasil dihapus']);
         else 
-            return response()->json(['status' => '400', 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
+            return response()->json(['status' => 400, 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
     }
 
     private function brand_check ($brand_code) {
