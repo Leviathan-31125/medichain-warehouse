@@ -23,6 +23,10 @@ class InvStore extends Model
 
     public $incrementing = false;
 
+    public function warehouse () {
+        return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_warehousecde');
+    }
+
     // public function stock () {
     //     return $this->hasOne(Stock::class, 'fc_barcode', 'fc_barcode');
     // }

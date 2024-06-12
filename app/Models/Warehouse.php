@@ -20,4 +20,8 @@ class Warehouse extends Model
     ];
 
     public $incrementing = false;
+
+    public function invstore () {
+        return $this->hasMany(InvStore::class, 'fc_warehousecode', 'fc_warehousecode');
+    }
 }

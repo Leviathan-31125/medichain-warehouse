@@ -64,6 +64,7 @@ Route::prefix('delivery-order')->group(function() {
 Route::prefix('warehouse')->controller(WarehouseController::class)->group(function(){
     Route::get('/', 'getAllWarehouse');
     Route::get('/{fc_warehousecode}', 'getDetailWarehouse');
+    Route::get('/invstore/list', 'getWarehouseWithInvStore');
     Route::post('/', 'createWarehouse');
     Route::put('/{fc_warehousecode}', 'updateWarehouse');
     Route::delete('/{fc_warehousecode}', 'deletedWarehouse');

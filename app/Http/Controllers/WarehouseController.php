@@ -108,4 +108,10 @@ class WarehouseController extends Controller
         else 
             return response()->json(['status' => 400, 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
     }
+
+    public function getWarehouseWithInvStore () {
+        $data = Warehouse::with('invstore')->get();
+
+        return response()->json(['status' => 200, 'data' => $data]);
+    }
 }
