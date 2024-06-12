@@ -29,7 +29,7 @@ class TempDOMSTController extends Controller
 
         if ($TempDoMST)
             return response()->json(['status' => 200, 'data' => $TempDoMST]);
-        return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System']);
+        return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
     }
 
     public function detailTempDOMST ($fc_dono) {
@@ -38,7 +38,7 @@ class TempDOMSTController extends Controller
 
         if ($TempDoMST)
             return response()->json(['status' => 200, 'data' => $TempDoMST]);
-        return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System']);
+        return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
     }
     
     public function createTempDOMST (Request $request) {
@@ -61,15 +61,15 @@ class TempDOMSTController extends Controller
 
         $tempDoMST = TempDoDMST::find($request->fc_dono);
         if ($tempDoMST)
-            return response()->json(['status' => 400, 'message' => 'Duplicate Data! User yang sama sedang membuat Sales Order']);
+            return response()->json(['status' => 400, 'message' => 'Duplicate Data! User yang sama sedang membuat Sales Order'], 400);
 
         $SOMST = SOMST::find($request->fc_sono);
         if (!$SOMST || $SOMST->fc_status == "LOCK" || $SOMST->fc_status == "FINISH")
-            return response()->json(['status' => 400, 'message' => 'Invalid Data! Sales Order yang dimasukkan tidak valid']);
+            return response()->json(['status' => 400, 'message' => 'Invalid Data! Sales Order yang dimasukkan tidak valid'], 400);
             
         $warehouse = Warehouse::find($request->fc_warehousecode);
         if (!$warehouse)
-            return response()->json(['status' => 400, 'message' => 'Invalid Data! Gudang yang dimasukkan tidak valid']);
+            return response()->json(['status' => 400, 'message' => 'Invalid Data! Gudang yang dimasukkan tidak valid'], 400);
         
         $created = TempDoDMST::create([
             'fc_dono' => $request->fc_dono,
@@ -80,7 +80,7 @@ class TempDOMSTController extends Controller
         if ($created) 
             return response()->json(['status' => 201, 'message' => 'DO berhasil dibuat']);
         
-        return response()->json(['status' => 400, 'message' => 'Create Fail! Maaf Delivery Order gagal dibuat']);
+        return response()->json(['status' => 400, 'message' => 'Create Fail! Maaf Delivery Order gagal dibuat'], 400);
     }
 
     public function submitTempDOMST ($fc_dono) {

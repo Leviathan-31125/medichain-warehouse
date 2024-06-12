@@ -36,9 +36,9 @@ class InvStoreController extends Controller
         $stock = Stock::find($intbarcode_decode);
         
         if(!$stock)
-            return response()->json(['status' => 400, 'message' => "Not Found! Stock tidak tersedia pada system"]);
+            return response()->json(['status' => 400, 'message' => "Not Found! Stock tidak tersedia pada system"], 400);
 
-        $InvStore = InvStore::where('fc_barcode', 'like', $intbarcode_decode.'%')->get();
+        $InvStore = InvStore::where('fc_barcode', 'like', $intbarcode_decode.'%')->orderBy('fd_expired' , 'asc')->get();
         return response()->json($InvStore);
     }
 }
