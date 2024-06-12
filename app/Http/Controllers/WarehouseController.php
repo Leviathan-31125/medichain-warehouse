@@ -34,7 +34,7 @@ class WarehouseController extends Controller
         ], [
             'fv_warehousename.required' => 'Nama gudang wajib disertakan',
             'fc_position.required' => 'Status posisi gudang wajib dimasukkan',
-            'fv_warehouseaddress' => 'Alamat gudang wajib dicantumkan'
+            'fv_warehouseaddress.required' => 'Alamat gudang wajib dicantumkan'
         ]);
 
         if ($validator->fails()){
