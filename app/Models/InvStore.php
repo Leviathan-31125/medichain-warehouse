@@ -20,4 +20,20 @@ class InvStore extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public $incrementing = false;
+
+    // public function stock () {
+    //     return $this->hasOne(Stock::class, 'fc_barcode', 'fc_barcode');
+    // }
+
+    public function getStockAttribute () {
+        return Stock::where('fc_barcode', $this->int_barcode)->first();
+    }
+
+    public function getIntBarcodeAttribute () {
+        return substr($this->fc_barcode, 0, 30);
+    }
+
+    protected $appends= ['stock'];
 }

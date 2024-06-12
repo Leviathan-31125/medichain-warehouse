@@ -25,6 +25,10 @@ class Stock extends Model
         return $this->belongsTo(Brand::class, 'fc_brandcode', 'fc_brandcode');
     }
 
+    public function invstore(){
+        return $this->hasMany(InvStore::class, 'fc_barcode', 'fc_barcode');
+    }
+
     // public function tempsodtl () {
     //     return $this->hasMany(TempSODTL::class, 'fc_barcode', 'fc_barcode');
     // }

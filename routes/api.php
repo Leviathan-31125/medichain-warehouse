@@ -3,6 +3,7 @@
 use App\Http\Controllers\auth\UserAuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\InvStoreController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TempDODTLController;
 use App\Http\Controllers\TempDOMSTController;
@@ -80,4 +81,11 @@ Route::controller(GeneralController::class)->prefix('general')->group(function()
     Route::get('/get-type-stock', 'getTypeStock');
     Route::get('/get-form-stock', 'getFormStock');
     Route::get('/get-name-pack', 'getNamePack');
+});
+
+Route::controller(InvStoreController::class)->prefix('invstore')->group(function(){
+    Route::get('/', 'getAllInvStore');
+    Route::get('/{fc_barcode}', 'getDetailInvStore');
+    Route::get('/warehouse/{fc_warehousecode}', 'getInvStoreByWarehouse');
+    Route::get('/stock/{fc_barcode}', 'getInvStoreByIntBarcode');
 });
