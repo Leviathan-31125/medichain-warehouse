@@ -6,6 +6,7 @@ use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TempDODTLController;
 use App\Http\Controllers\TempDOMSTController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,14 @@ Route::prefix('delivery-order')->group(function() {
         Route::delete('/{fc_dono}', 'removeTempDODTL');
         Route::put('/{fc_dono}', 'updateTempDODTL');
     });
+});
+
+Route::prefix('warehouse')->controller(WarehouseController::class)->group(function(){
+    Route::get('/', 'getAllWarehouse');
+    Route::get('/{fc_warehousecode}', 'getDetailWarehouse');
+    Route::post('/', 'createWarehouse');
+    Route::put('/{fc_warehousecode}', 'updateWarehouse');
+    Route::delete('/{fc_warehousecode}', 'deletedWarehouse');
 });
 
 Route::controller(UserAuthController::class)->group(function () {

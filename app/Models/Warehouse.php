@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Warehouse extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 't_warehouse';
     protected $primaryKey = 'fc_warehousecode';
@@ -17,4 +18,6 @@ class Warehouse extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public $incrementing = false;
 }

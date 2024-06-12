@@ -130,9 +130,9 @@ class StockController extends Controller
 
     public function deleteStock ($fc_barcode) {
         $brandcode_decoded = base64_decode($fc_barcode);
-        $brand = Stock::where('fc_barcode',$brandcode_decoded)->delete();
+        $stock = Stock::where('fc_barcode',$brandcode_decoded)->delete();
 
-        if($brand) 
+        if($stock) 
             return response()->json(['status' => 200, 'message' => 'Stock berhasil dihapus']);
         else 
             return response()->json(['status' => 400, 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
