@@ -25,7 +25,7 @@ class TempDOMSTController extends Controller
 
     public function getDetailTempDOSOMST($fc_dono){
         $dono_decoded = base64_decode($fc_dono);
-        $TempDoMST = TempDoDMST::with(['tempdodtl', 'somst', 'somst.sodtl', 'somst.sodtl.stock', 'somst.customer'])->find($dono_decoded);
+        $TempDoMST = TempDoDMST::with(['tempdodtl', 'tempdodtl.invstore', 'somst', 'somst.sodtl', 'somst.sodtl.stock', 'somst.customer'])->find($dono_decoded);
 
         if ($TempDoMST)
             return response()->json(['status' => 200, 'data' => $TempDoMST]);
