@@ -33,12 +33,29 @@ class TempDOMSTController extends Controller
     }
     
     public function createTempDOMST (Request $request) {
+        $validator = Validator::make($request->all(), [
+            'fc_dono' => 'required',
+            'fc_sono' => 'required',
+            'fc_warehousecode' => 'required'
+        ], [
+            'fc_dono.required' => "No. DO wajib dilampirkan",
+            'fc_sono.required' => "No. SO tidak diketahui",
+            'fc_warehousecode.required' => "Gudang pengiriman tidak ada"
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'message' => $validator->errors()->first()
+            ], 400);
+        }
+
         $tempDoMST = TempDoDMST::find($request->fc_dono);
         if ($tempDoMST)
             return response()->json(['status' => 400, 'message' => 'Duplicate Data! User yang sama sedang membuat Sales Order']);
 
         $SOMST = SOMST::find($request->fc_sono);
-        if (!$SOMST)
+        if (!$SOMST || $SOMST->fc_status == "LOCK" || $SOMST->fc_status == "FINISH")
             return response()->json(['status' => 400, 'message' => 'Invalid Data! Sales Order yang dimasukkan tidak valid']);
             
         $warehouse = Warehouse::find($request->fc_warehousecode);

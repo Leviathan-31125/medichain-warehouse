@@ -22,4 +22,8 @@ class SOMST extends Model
     public function sodtl () {
         return $this->hasMany(SODTL::class, 'fc_sono', 'fc_sono');
     }
+
+    public function customer () {
+        return $this->hasOne(Customer::class, 'fc_membercode', 'fc_membercode');
+    }
 }

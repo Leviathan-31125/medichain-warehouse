@@ -4,6 +4,7 @@ use App\Http\Controllers\auth\UserAuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\InvStoreController;
+use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TempDODTLController;
 use App\Http\Controllers\TempDOMSTController;
@@ -58,6 +59,10 @@ Route::prefix('delivery-order')->group(function() {
         Route::post('/{fc_dono}', 'addTempDODTL');
         Route::delete('/{fc_dono}', 'removeTempDODTL');
         Route::put('/{fc_dono}', 'updateTempDODTL');
+    });
+
+    Route::prefix('sales-order')->controller(SalesOrderController::class)->group(function() {
+        Route::get('/','getAllSOMST');
     });
 });
 
