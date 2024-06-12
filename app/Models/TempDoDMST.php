@@ -20,7 +20,7 @@ class TempDoDMST extends Model
     public $incrementing = false;
 
     public function tempdodtl () {
-        return $this->hasMany(TempDODTL::class, 'fc_dono', 'fc_dono');
+        return $this->hasMany(TempDoDTL::class, 'fc_dono', 'fc_dono');
     }
 
     public function warehouse () {
