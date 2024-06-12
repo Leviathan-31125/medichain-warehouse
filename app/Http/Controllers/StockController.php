@@ -26,7 +26,7 @@ class StockController extends Controller
         if($stock) 
             return response()->json(['status' => '200', 'data' => $stock]);
         else 
-            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan']);
+            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan'], 400);
     }
 
     public function createStock (Request $request) {
@@ -60,18 +60,18 @@ class StockController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-                'status' => 300,
+                'status' => 400,
                 'message' => $validator->errors()->first()
-            ]);
+            ], 400);
         }
         
         $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
         
         // pengecekan stockcode untuk mencegah duplikasi stock 
         if ($stock) 
-            return response()->json(['status' => 400, 'message' => 'Duplikasi data! Maaf data telah ada di system']);
+            return response()->json(['status' => 400, 'message' => 'Duplikasi data! Maaf data telah ada di system'], 400);
         if (!$this->brand_check($request->fc_brandcode))
-            return response()->json(['status' => 400, 'message' => 'Undefined data! Maaf brand belum terdaftar pada system']); 
+            return response()->json(['status' => 400, 'message' => 'Undefined data! Maaf brand belum terdaftar pada system'], 400); 
         
         $created = Stock::create([
             'fc_stockcode' => $request->fc_stockcode,
@@ -92,7 +92,7 @@ class StockController extends Controller
         if ($created) 
             return response()->json(['status' => '201', 'message' => 'Stock baru berhasil dibuat', 'data' => $created]);
         else 
-            return response()->json(['status' => '400', 'message' => 'Create Failed! Gagal menambahkan stock']);
+            return response()->json(['status' => '400', 'message' => 'Create Failed! Gagal menambahkan stock'], 400);
     }
 
     public function updateStock (Request $request, $fc_barcode) {
@@ -104,9 +104,9 @@ class StockController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-                'status' => 300,
+                'status' => 400,
                 'message' => $validator->errors()->first()
-            ]);
+            ], 400);
         }
         
         $barcode_decoded = base64_decode($fc_barcode);
@@ -114,18 +114,18 @@ class StockController extends Controller
         
         // pengecekan stok apakah ada di system atau tidak 
         if (!$stock)
-            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan']);
+            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan'], 400);
 
         // pengecekan brand sudah ter-register atau tidak
         if(!$this->brand_check($request->fc_brandcode)) 
-            return response()->json(['status' => '400', 'message' => 'Brand undefined! Brand belum terdaftar pada system']);
+            return response()->json(['status' => '400', 'message' => 'Brand undefined! Brand belum terdaftar pada system'], 400);
 
         // update data berdasarkan request kecuali stockcode
         $updated = $stock->update($request->except(['fc_stockcode']));
         if ($updated)
             return response()->json(['status' => 201, 'message' => 'Data stock berhasil diupdate']);
         else
-            return response()->json(['status' => '400', 'message' => 'Gagal update!']);
+            return response()->json(['status' => '400', 'message' => 'Gagal update!'], 400);
     }
 
     public function deleteStock ($fc_barcode) {
@@ -135,7 +135,7 @@ class StockController extends Controller
         if($brand) 
             return response()->json(['status' => '200', 'message' => 'Stock berhasil dihapus']);
         else 
-            return response()->json(['status' => '400', 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan']);
+            return response()->json(['status' => '400', 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
     }
 
     private function brand_check ($brand_code) {

@@ -71,4 +71,4 @@ Route::controller(GeneralController::class)->prefix('general')->group(function()
     Route::get('/get-type-stock', 'getTypeStock');
     Route::get('/get-form-stock', 'getFormStock');
     Route::get('/get-name-pack', 'getNamePack');
-})
+});

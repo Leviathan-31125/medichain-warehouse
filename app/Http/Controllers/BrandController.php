@@ -23,7 +23,7 @@ class BrandController extends Controller
         ])->limit(1)->get();
 
         if ($brand->count() > 0)
-            return response()->json(['status' => 400, 'message' => 'Duplikasi data! Maaf data telah ada di system']);
+            return response()->json(['status' => 400, 'message' => 'Duplikasi data! Maaf data telah ada di system'],400);
 
         $data = Brand::create([
             'fv_brandname' => $request->fv_brandname,
@@ -38,7 +38,7 @@ class BrandController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' =>  'Hayoo kenapa?'
-            ]);
+            ], 400);
         }
     }
 
@@ -48,13 +48,13 @@ class BrandController extends Controller
         $brand = Brand::find($brandcode_decoded);
 
         if (!$brand) 
-            return response()->json(['status' => '400', 'message' => 'Gagal update! Brand tidak ditemukan']);
+            return response()->json(['status' => '400', 'message' => 'Gagal update! Brand tidak ditemukan'], 400);
 
         $updated = $brand->update($request->all());
         if ($updated) 
             return response()->json(['status' => 201, 'message' => 'Data berhasil diupdate']);
         else
-            return response()->json(['status' => '400', 'message' => 'Gagal update!']);
+            return response()->json(['status' => '400', 'message' => 'Gagal update!'], 400);
     }
 
     public function getDetailBrand ($fc_brandcode) {
@@ -65,7 +65,7 @@ class BrandController extends Controller
         if($brand) 
             return response()->json(['status' => '200', 'data' => $brand]);
         else 
-            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan']);
+            return response()->json(['status' => '400', 'message' => 'Not Found! Data tidak ditemukan'], 400);
     }
 
     public function deleteBrand ($fc_brandcode) {
@@ -76,6 +76,6 @@ class BrandController extends Controller
         if($brand) 
             return response()->json(['status' => '200', 'message' => 'Brand berhasil dihapus']);
         else 
-            return response()->json(['status' => '400', 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan']);
+            return response()->json(['status' => '400', 'message' => 'Gagal hapus! Data gagal dihapus atau tidak ditemukan'], 400);
     }
 }

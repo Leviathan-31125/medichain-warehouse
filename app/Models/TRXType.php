@@ -9,7 +9,7 @@ class TRXType extends Model
 {
     use HasFactory;
 
-    protected $table = 't_trx';
+    protected $table = 't_trxtype';
     protected $primaryKey = 'fc_trxcode';
     public $guarded = [
         'created_at',
