@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\UserAuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TempDODTLController;
 use App\Http\Controllers\TempDOMSTController;
@@ -65,3 +66,9 @@ Route::controller(UserAuthController::class)->group(function () {
     Route::get('/details', 'details')->middleware('auth:api');
     Route::put('/logout', 'logOut')->middleware('auth:api');
 });
+
+Route::controller(GeneralController::class)->prefix('general')->group(function(){
+    Route::get('/get-type-stock', 'getTypeStock');
+    Route::get('/get-form-stock', 'getFormStock');
+    Route::get('/get-name-pack', 'getNamePack');
+})

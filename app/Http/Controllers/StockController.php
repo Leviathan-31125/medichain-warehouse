@@ -96,6 +96,19 @@ class StockController extends Controller
     }
 
     public function updateStock (Request $request, $fc_barcode) {
+        $validator = Validator::make($request->all(), [
+            'fc_brandcode' => 'required',
+        ], [
+            'fc_brandcode.required' => 'Brand wajib diisi',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ]);
+        }
+        
         $barcode_decoded = base64_decode($fc_barcode);
         $stock = Stock::where('fc_barcode', $barcode_decoded)->first();
         
