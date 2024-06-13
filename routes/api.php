@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\UserAuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\DOMSTController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\InvStoreController;
 use App\Http\Controllers\SalesOrderController;
@@ -54,7 +55,6 @@ Route::prefix('delivery-order')->group(function() {
         Route::put('/{fc_dono}', 'setDetailInfoTempDODTL');
         Route::put('/{fc_dono}/submit', 'submitTempDOMST');
         Route::put('/{fc_dono}/cancel', 'cancelTempDOMST');
-        Route::put('/{fc_dono}/receiving', 'updateRecevingStatus');
     });
 
     Route::prefix('temp-do-dtl')->controller(TempDODTLController::class)->group(function () {
@@ -62,6 +62,11 @@ Route::prefix('delivery-order')->group(function() {
         Route::post('/{fc_dono}', 'addTempDODTL');
         Route::delete('/{fc_dono}', 'removeTempDODTL');
         Route::put('/{fc_dono}', 'updateTempDODTL');
+    });
+
+    Route::prefix('domst')->controller(DOMSTController::class)->group(function(){
+        Route::get('/', 'getAllDOMST');
+        Route::put('/{fc_dono}/receiving', 'updateRecevingStatus');
     });
 
     Route::prefix('sales-order')->controller(SalesOrderController::class)->group(function() {

@@ -164,47 +164,12 @@ class TempDOMSTController extends Controller
             DB::commit();
 
             if($deletedDODTL && $deletedDOMST)
-                return response()->json(['status' => 201, 'message' => 'Delivery Order berhasil disubmit']);
+                return response()->json(['status' => 201, 'message' => 'Delivery Order berhasil dicancel']);
 
         } catch (Exception $err) {
             DB::rollBack();
             return response()->json(['status' => 400, 'message' => 'Create Failed! Delivery Order gagal dibuat'.$err->getMessage()], 400);
         }
-    }
-
-    public function updateRecevingStatus(Request $request, $fc_dono) {
-        $validator = Validator::make($request->all(), [
-            'fd_doarrivaldate' => 'required',
-            'fc_custreceiver' => 'required'
-        ], [
-            'fd_doarrivaldate.required' => 'Tanggal kedatangan harus dilampirkan',
-            'fc_custreceiver.required' => 'Penerima kedatangan barang tidak terdeteksi'
-        ]);
-
-        if ($validator->fails()){
-            return response()->json([
-                'status' => 300,
-                'message' => $validator->errors()->first()
-            ], 400);
-        }
-
-        $dono_decoded = base64_decode($fc_dono);
-        $TempDoMST = TempDoDMST::find($dono_decoded);
-
-        if (!$TempDoMST || $TempDoMST->fc_status == 'FINISH')
-            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
-
-        $TempDoMST->fc_status = 'FINISH';
-        $TempDoMST->fd_doarrivaldate = $request->fd_doarrivaldate;
-        $TempDoMST->fc_custreceiver = $request->fc_custreceiver;
-        if ($request->ft_description !== null)
-            $TempDoMST->ft_description = $TempDoMST->ft_description . "Customer: " . $request->ft_description;
-
-        $updated = $TempDoMST->save();
-
-        if ($updated)
-            return response()->json(['status' => 200, 'message' => 'Delivery Order berhasil diterima']);
-        return response()->json(['status' => 400, 'message' => 'Delivery Order gagal diterima'], 400);
     }
 
     public function checkActiveDO ($fc_dono) {
