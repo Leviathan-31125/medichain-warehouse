@@ -88,7 +88,7 @@ class TempDOMSTController extends Controller
         $tempDoMST = TempDoDMST::find($dono_decoded);
 
         if(!$tempDoMST)
-            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System']);
+            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
 
         DB::beginTransaction();
 
@@ -107,7 +107,7 @@ class TempDOMSTController extends Controller
 
         } catch (Exception $err) {
             DB::rollBack();
-            return response()->json((['status' => 400, 'message' => 'Create Failed! Delivery Order gagal dibuat'.$err->getMessage()]));
+            return response()->json(['status' => 400, 'message' => 'Create Failed! Delivery Order gagal dibuat'.$err->getMessage()], 400);
         }
     }
 
@@ -126,14 +126,14 @@ class TempDOMSTController extends Controller
             return response()->json([
                 'status' => 300,
                 'message' => $validator->errors()->first()
-            ]);
+            ], 400);
         }
         
         $dono_decoded = base64_decode($fc_dono);
         $tempDoMST = TempDoDMST::find($dono_decoded);
 
         if (!$tempDoMST)
-            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System']);
+            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
 
         $updated = $tempDoMST->update([
             'fd_dodate_user' => $request->fd_dodate_user,
@@ -145,7 +145,31 @@ class TempDOMSTController extends Controller
         if ($updated) 
             return response()->json(['status' => 201, 'message' => 'DO berhasil diupdate']);
 
-        return response()->json(['status' => 400, 'message' => 'Update Fail! Maaf Delivery Order gagal diupdate']);
+        return response()->json(['status' => 400, 'message' => 'Update Fail! Maaf Delivery Order gagal diupdate'], 400);
+    }
+
+    public function cancelTempDOMST ($fc_dono) {
+        $dono_decoded = base64_decode($fc_dono);
+        $tempDoMST = TempDoDMST::find($dono_decoded);
+
+        if(!$tempDoMST)
+            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
+
+        DB::beginTransaction();
+
+        try{
+            $deletedDODTL = TempDoDTL::where('fc_dono', $dono_decoded)->delete();
+            $deletedDOMST = TempDoDMST::where('fc_dono', $dono_decoded)->delete();
+
+            DB::commit();
+
+            if($deletedDODTL && $deletedDOMST)
+                return response()->json(['status' => 201, 'message' => 'Delivery Order berhasil disubmit']);
+
+        } catch (Exception $err) {
+            DB::rollBack();
+            return response()->json(['status' => 400, 'message' => 'Create Failed! Delivery Order gagal dibuat'.$err->getMessage()], 400);
+        }
     }
 
     public function updateRecevingStatus(Request $request, $fc_dono) {
@@ -161,14 +185,14 @@ class TempDOMSTController extends Controller
             return response()->json([
                 'status' => 300,
                 'message' => $validator->errors()->first()
-            ]);
+            ], 400);
         }
 
         $dono_decoded = base64_decode($fc_dono);
         $TempDoMST = TempDoDMST::find($dono_decoded);
 
         if (!$TempDoMST || $TempDoMST->fc_status == 'FINISH')
-            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System']);
+            return response()->json(['status' => 400, 'message' => 'Data Not Found! Delivery Order tidak tersedia di System'], 400);
 
         $TempDoMST->fc_status = 'FINISH';
         $TempDoMST->fd_doarrivaldate = $request->fd_doarrivaldate;
@@ -180,6 +204,6 @@ class TempDOMSTController extends Controller
 
         if ($updated)
             return response()->json(['status' => 200, 'message' => 'Delivery Order berhasil diterima']);
-        return response()->json(['status' => 400, 'message' => 'Delivery Order gagal diterima']);
+        return response()->json(['status' => 400, 'message' => 'Delivery Order gagal diterima'], 400);
     }
 }
