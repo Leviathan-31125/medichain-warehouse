@@ -49,6 +49,7 @@ Route::prefix('delivery-order')->group(function() {
         Route::get('/', 'getAllTempDOMST');
         Route::get('/{fc_dono}', 'detailTempDOMST');
         Route::get('/so/{fc_dono}', 'getDetailTempDOSOMST');
+        Route::get('/do/{fc_dono}', 'checkActiveDO');
         Route::post('/', 'createTempDOMST');
         Route::put('/{fc_dono}', 'setDetailInfoTempDODTL');
         Route::put('/{fc_dono}/submit', 'submitTempDOMST');

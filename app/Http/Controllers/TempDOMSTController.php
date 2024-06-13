@@ -206,4 +206,13 @@ class TempDOMSTController extends Controller
             return response()->json(['status' => 200, 'message' => 'Delivery Order berhasil diterima']);
         return response()->json(['status' => 400, 'message' => 'Delivery Order gagal diterima'], 400);
     }
+
+    public function checkActiveDO ($fc_dono) {
+        $dono_decoded = base64_decode($fc_dono);
+        $TempDoMST = TempDoDMST::with('tempdodtl')->find($dono_decoded);
+
+        if ($TempDoMST)
+            return response()->json(['status' => true]);
+        return response()->json(['status' => false]);
+    }
 }
