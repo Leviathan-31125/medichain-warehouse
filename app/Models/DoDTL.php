@@ -21,7 +21,7 @@ class DoDTL extends Model
     public $incrementing = false;
 
     public function invstore () {
-        return $this->hasOne(Invstore::class, 'fc_barcode', 'fc_barcode');
+        return $this->hasOne(InvStore::class, 'fc_barcode', 'fc_barcode');
     }
 
     public function domst () {
