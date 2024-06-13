@@ -102,4 +102,5 @@ Route::controller(InvStoreController::class)->prefix('invstore')->group(function
     Route::get('/{fc_barcode}', 'getDetailInvStore');
     Route::get('/warehouse/{fc_warehousecode}', 'getInvStoreByWarehouse');
     Route::get('/stock/{fc_barcode}', 'getInvStoreByIntBarcode');
+    Route::get('/inquiry/all', 'getAllTrackStock');
 });

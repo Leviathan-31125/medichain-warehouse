@@ -17,4 +17,14 @@ class InquiriBP extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public $incrementing = false;
+
+    public function invstore(){
+        return $this->hasOne(InvStore::class, 'fc_barcode', 'fc_barcode');
+    }
+
+    public function warehouse(){
+        return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode');
+    }
 }

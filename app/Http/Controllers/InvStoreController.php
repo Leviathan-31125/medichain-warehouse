@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InquiriBP;
 use App\Models\InvStore;
 use App\Models\Stock;
 use Illuminate\Http\Request;
@@ -40,5 +41,10 @@ class InvStoreController extends Controller
 
         $InvStore = InvStore::where('fc_barcode', 'like', $intbarcode_decode.'%')->orderBy('fd_expired' , 'asc')->get();
         return response()->json($InvStore);
+    }
+
+    public function getAllTrackStock () {
+        $data = InquiriBP::with(['invstore', 'warehouse'])->get();
+        return response()->json([$data], 200);
     }
 }
