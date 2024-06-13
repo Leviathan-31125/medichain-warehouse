@@ -53,7 +53,7 @@ Route::prefix('delivery-order')->group(function() {
         Route::post('/', 'createTempDOMST');
         Route::put('/{fc_dono}', 'setDetailInfoTempDODTL');
         Route::put('/{fc_dono}/submit', 'submitTempDOMST');
-        Route::put('/{fc_dono}/cancel', 'submitTempDOMST');
+        Route::put('/{fc_dono}/cancel', 'cancelTempDOMST');
         Route::put('/{fc_dono}/receiving', 'updateRecevingStatus');
     });
 
