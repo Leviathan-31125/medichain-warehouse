@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class DOMSTController extends Controller
 {
     public function getAllDOMST() {
-        $data = DoMST::with(['dodtl', 'dodtl.invstore', 'somst'])->get();
+        $data = DoMST::with(['dodtl', 'dodtl.invstore', 'somst', 'somst.customer', 'warehouse'])->get();
         return response()->json($data, 200);
     }
 
