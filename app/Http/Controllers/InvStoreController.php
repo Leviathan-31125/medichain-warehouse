@@ -45,6 +45,6 @@ class InvStoreController extends Controller
 
     public function getAllTrackStock () {
         $data = InquiriBP::with(['invstore', 'warehouse'])->get();
-        return response()->json([$data], 200);
+        return response()->json($data, 200);
     }
 }
